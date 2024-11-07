@@ -1,5 +1,4 @@
 import React from "react";
-
 const ExperienciesInfo = () => {
   return (
     <div className="p-10 ">

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import TypewriterComponent from "typewriter-effect";
+import Spinner from "./Spinner";
 
 const Lema = () => {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ const Lema = () => {
           className="text-xl"
           style={{ marginTop: "6rem", marginBottom: "6rem" }}
         >
-          <p className="flex justify-center">Please wait...</p>
+          <Spinner />
         </div>
       ) : (
         <div
