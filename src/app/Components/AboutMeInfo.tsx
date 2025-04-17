@@ -15,8 +15,9 @@ const AboutMeInfo: React.FC<AboutMeInfoProps> = ({ onClose }) => {
           like ReactJs, React Native, NextJs, NestJs and NodeJs.
         </p>
         <p className="mt-4">
-          I'm passionate about innovation and solving complex problems, and I'm
-          always eager to learn and improve my skills to tackle new challenges.
+          I&apos;m a passionate about innovation and solving complex
+          problems, and I'm always eager to learn and improve my skills to
+          tackle new challenges.
         </p>
         <button
           className="mt-6 font-bold hover:text-gray-300 transition duration-300"

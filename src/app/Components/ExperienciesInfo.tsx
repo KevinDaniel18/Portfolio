@@ -11,10 +11,10 @@ const ExperienciesInfo = () => {
         </h2>
         <p className="text-sm text-gray-500 mb-2">March 2025 – Present</p>
         <p className="text-gray-700 text-justify">
-          At Pawify, I led the migration of the website's visual identity using
-          React with Vite, improving both performance and maintainability. I
-          implemented a secure user registration and validation system with Zod,
-          and developed backend services with Django (Python). I was also
+          At Pawify, I led the migration of the website&apos;s visual identity
+          using React with Vite, improving both performance and maintainability.
+          I implemented a secure user registration and validation system with
+          Zod, and developed backend services with Django (Python). I was also
           responsible for connecting and managing the MySQL database to handle
           user and animal-related data efficiently.
         </p>
