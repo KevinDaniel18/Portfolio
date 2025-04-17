@@ -37,9 +37,12 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <ImagenYo />
-            <h3 className="text-white text-lg font-semibold">
-              Kevin Sierra Castro
-            </h3>
+            <div>
+              <h3 className="text-white text-lg font-semibold">
+                Kevin Sierra Castro
+              </h3>
+              <p className=" text-gray-400">FullStack Developer 🖥️</p>
+            </div>
           </div>
           <div className="hidden lg:flex items-center space-x-4">
             <h3
@@ -71,7 +74,7 @@ export const Header = () => {
             <FontAwesomeIcon
               icon={faBars}
               className="h-10 cursor-pointer text-white"
-              style={{marginRight: "20px"}}
+              style={{ marginRight: "20px" }}
               onClick={toggleMenu}
             />
           </div>

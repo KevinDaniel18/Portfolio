@@ -10,18 +10,13 @@ const AboutMeInfo: React.FC<AboutMeInfoProps> = ({ onClose }) => {
       <div className="bg-black bg-opacity-50 fixed inset-0"></div>
       <div className="bg-white p-8 rounded-lg w-full lg:w-5/6 animate-slide-from-right text-black text-lg font-semibol">
         <p>
-          I am a systems engineering student, with a solid theoretical
-          background and practice in the area of programming. My goal is to
-          become a well-trained professional and contribute to the development
-          of creative solutions in information technology. Additionally, I am
-          committed to continuous learning and staying updated with the latest
-          trends and technological advances.
+          I am a FullStack developer, I like developing in JavaScript and
+          TypeScript technologies. I enjoy working with frameworks and libraries
+          like ReactJs, React Native, NextJs, NestJs and NodeJs.
         </p>
         <p className="mt-4">
-          Aside from my academic experience, I have participated in practical
-          projects that have strengthened my understanding in this field and
-          have given me the opportunity to communicate and work as a team, being
-          committed to excellence in each task I undertake.
+          I'm passionate about innovation and solving complex problems, and I'm
+          always eager to learn and improve my skills to tackle new challenges.
         </p>
         <button
           className="mt-6 font-bold hover:text-gray-300 transition duration-300"

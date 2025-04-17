@@ -7,7 +7,7 @@ export const ImagenYo = () => {
       <img
         src="/Imagenes/yo.jpg"
         alt="yo"
-        className="h-16 lg:h-20 w-16 lg:w-20 rounded-full"
+        className="h-16 lg:h-20 w-xl lg:w-xl rounded-full"
         style={{ pointerEvents: "none", marginLeft: "20px" }}
         draggable="false"
         onContextMenu={(e) => e.preventDefault()}
