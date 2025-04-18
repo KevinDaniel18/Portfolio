@@ -5,10 +5,10 @@ export const ImagenYo = () => {
   return (
     <div className="overflow-hidden">
       <img
-        src="/Imagenes/yo.jpg"
+        src="/Imagenes/yo.jpeg"
         alt="yo"
-        className="h-16 lg:h-20 w-xl lg:w-xl rounded-full"
-        style={{ pointerEvents: "none", marginLeft: "20px" }}
+        className="h-20 lg:h-20 rounded-full"
+        style={{ pointerEvents: "none", marginLeft: "20px",  }}
         draggable="false"
         onContextMenu={(e) => e.preventDefault()}
       />
