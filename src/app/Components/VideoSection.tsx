@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Play,
@@ -13,25 +13,23 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import YouTube, { YouTubePlayer } from "react-youtube";
 
 function VideoSection() {
   const videos = [
     {
-      src: "/videos/user-interaction.mp4",
-      type: "video/mp4",
+      videoId: "AWigCFx8pzU",
       title: "User Interaction",
       description: "See how users can interact with the application interface.",
     },
     {
-      src: "/videos/2fa-deletion.mp4",
-      type: "video/mp4",
+      videoId: "OXKCjeEVn-o",
       title: "2FA Account Deletion",
       description:
         "Learn how to delete an account using two-factor authentication.",
     },
     {
-      src: "/videos/feed.mp4",
-      type: "video/mp4",
+      videoId: "vZaiwuO0Vz4",
       title: "Exploring Feed",
       description:
         "Discover how the content feed works and how to navigate it.",
@@ -41,90 +39,62 @@ function VideoSection() {
   const [activeVideo, setActiveVideo] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
+  const playerRef = useRef<YouTubePlayer>();
 
-  const handleVideoRef = (element: HTMLVideoElement | null) => {
-    setVideoRef(element);
+  const onReady = (event: { target: YouTubePlayer }) => {
+    playerRef.current = event.target;
+    playerRef.current?.pauseVideo();
   };
 
-  useEffect(() => {
-    if (!videoRef) return;
-
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setActiveVideo((prev) => (prev + 1) % videos.length);
-    };
-
-    videoRef.addEventListener("play", handlePlay);
-    videoRef.addEventListener("pause", handlePause);
-    videoRef.addEventListener("ended", handleEnded);
-
-    return () => {
-      videoRef.removeEventListener("play", handlePlay);
-      videoRef.removeEventListener("pause", handlePause);
-      videoRef.removeEventListener("ended", handleEnded);
-    };
-  }, [videoRef]);
-
   const togglePlay = () => {
-    if (!videoRef) return;
-    if (isPlaying) {
-      videoRef.pause();
-    } else {
-      videoRef.play();
-    }
+    if (!playerRef.current) return;
+    isPlaying ? playerRef.current.pauseVideo() : playerRef.current.playVideo();
     setIsPlaying(!isPlaying);
   };
 
   const toggleMute = () => {
-    if (!videoRef) return;
-    videoRef.muted = !videoRef.muted;
+    if (!playerRef.current) return;
+    isMuted ? playerRef.current.unMute() : playerRef.current.mute();
     setIsMuted(!isMuted);
   };
 
   const toggleFullscreen = () => {
-    if (!videoRef) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      videoRef.requestFullscreen();
+    if (!playerRef.current) return;
+    const iframe = playerRef.current.getIframe();
+    if (iframe.requestFullscreen) {
+      iframe.requestFullscreen();
     }
-  };
-
-  const nextVideo = () => {
-    setActiveVideo((prev) => (prev + 1) % videos.length);
   };
 
   const prevVideo = () => {
     setActiveVideo((prev) => (prev - 1 + videos.length) % videos.length);
+    setIsPlaying(false);
   };
 
-  useEffect(() => {
-    if (!videoRef) return;
-    videoRef.load();
+  const nextVideo = () => {
+    setActiveVideo((prev) => (prev + 1) % videos.length);
     setIsPlaying(false);
-  }, [activeVideo, videoRef]);
+  };
 
   return (
     <div className="p-6 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 rounded-xl">
       <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
         <div className="space-y-4">
           <div className="relative rounded-lg overflow-hidden bg-black aspect-video shadow-xl">
-            <video
-              ref={handleVideoRef}
-              className="w-full h-full object-contain"
-              poster={`/placeholder.svg?height=720&width=1280&text=${encodeURIComponent(
-                videos[activeVideo].title
-              )}`}
-            >
-              <source
-                src={videos[activeVideo].src}
-                type={videos[activeVideo].type}
-              />
-              Your browser does not support the video tag.
-            </video>
+            <YouTube
+              videoId={videos[activeVideo].videoId}
+              onReady={onReady}
+              className="absolute top-0 left-0 w-full h-full"
+              opts={{
+                width: "100%",
+                height: "100%",
+                playerVars: {
+                  autoplay: 0,
+                  controls: 0,
+                  modestbranding: 1,
+                },
+              }}
+            />
 
             {/* Video overlay controls */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
@@ -146,7 +116,7 @@ function VideoSection() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/30 text-white hover:bg-black/50"
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/30 text-white hover:bg-black/50 flex items-center justify-center"
               onClick={prevVideo}
             >
               <ChevronLeft className="h-6 w-6" />
@@ -155,7 +125,7 @@ function VideoSection() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/30 text-white hover:bg-black/50"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/30 text-white hover:bg-black/50 flex items-center justify-center"
               onClick={nextVideo}
             >
               <ChevronRight className="h-6 w-6" />
